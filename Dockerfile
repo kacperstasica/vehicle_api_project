@@ -11,4 +11,9 @@ RUN pip install pipenv --no-cache-dir && pipenv install --dev --system --deploy 
 
 COPY . /code/
 
+# collect static files
+RUN python manage.py collectstatic --noinput
+
+CMD gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
+
 EXPOSE 8000
