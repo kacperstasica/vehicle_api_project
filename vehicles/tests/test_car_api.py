@@ -63,7 +63,7 @@ class CarApiTestCase(APITestCase):
 
         self.assertEqual(
             response.json().get('detail'),
-            'Such car does not exist in our database, try again with another make or model.'
+            CarException.default_detail
         )
 
     @patch('vehicles.services.car_existence_checker.CarExistenceChecker.get_vehicles_response')

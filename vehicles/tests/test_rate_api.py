@@ -70,4 +70,3 @@ class ReviewAPITestCase(APITestCase):
         )
         self.assertEqual(car1.average_rating, 5.0)
         self.assertEqual(car2.average_rating, 4.5)
-
