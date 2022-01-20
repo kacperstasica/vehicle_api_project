@@ -14,7 +14,8 @@ class CarSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def get_avg_rating(obj):
-        return obj.average_rating
+        if obj.average_rating:
+            return round(obj.average_rating, 1)
 
     def create(self, validated_data):
         model = validated_data['model']

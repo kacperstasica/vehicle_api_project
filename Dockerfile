@@ -7,7 +7,7 @@ WORKDIR /code
 
 COPY Pipfile Pipfile.lock /code/
 
-RUN pip install pipenv --no-cache-dir && pipenv install --system --deploy && pipenv --clear
+RUN pip install pipenv --no-cache-dir && pipenv install --dev --system --deploy && pipenv --clear
 
 COPY . /code/
 

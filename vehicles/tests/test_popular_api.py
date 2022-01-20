@@ -1,6 +1,6 @@
 from rest_framework.test import APITestCase
 
-from vehicles.tests.factories import CarFactory
+from .factories import CarFactory
 
 
 class PopularAPITestCase(APITestCase):
@@ -8,8 +8,8 @@ class PopularAPITestCase(APITestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.popular_url = '/api/v1/popular/'
-        cls.rate_url = '/api/v1/rate/'
+        cls.popular_url = '/popular/'
+        cls.rate_url = '/rate/'
         cls.car1 = CarFactory(model='Golf', make='Volkswagen')
         cls.car2 = CarFactory(model='Passat', make='Volkswagen')
         cls.car3 = CarFactory(model='DB9', make='ASTON MARTIN')

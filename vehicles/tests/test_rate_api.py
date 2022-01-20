@@ -1,8 +1,8 @@
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from vehicles.models import Car
-from vehicles.tests.factories import CarFactory
+from ..models import Car
+from .factories import CarFactory
 
 
 class ReviewAPITestCase(APITestCase):
@@ -10,7 +10,7 @@ class ReviewAPITestCase(APITestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.rate_url = '/api/v1/rate/'
+        cls.rate_url = '/rate/'
 
     def test_add_rating(self):
         car = CarFactory(model='Golf', make='Volkswagen')

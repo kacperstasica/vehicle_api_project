@@ -83,7 +83,6 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        # env.db(),
         **env.db('DATABASE_URL'),
         'CONN_MAX_AGE': 600,  # 10m
     }

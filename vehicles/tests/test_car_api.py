@@ -3,8 +3,8 @@ from unittest.mock import patch
 from rest_framework import status
 from rest_framework.test import APITestCase
 
-from vehicles.models import Car
-from vehicles.tests.factories import CarFactory
+from ..models import Car
+from .factories import CarFactory
 
 
 class CarApiTestCase(APITestCase):
@@ -12,7 +12,7 @@ class CarApiTestCase(APITestCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.cars_url = '/api/v1/cars/'
+        cls.cars_url = '/cars/'
 
     @patch('vehicles.services.car_existence_checker.CarExistenceChecker.get_vehicles_response')
     def test_car_create(self, mock_response):
