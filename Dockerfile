@@ -10,4 +10,6 @@ COPY Pipfile Pipfile.lock /code/
 RUN pip install pipenv --no-cache-dir && pipenv install --dev --system --deploy && pipenv --clear
 
 COPY . /code/
+RUN mkdir "code/staticfiles"
 
+RUN python manage.py collectstatic --noinput

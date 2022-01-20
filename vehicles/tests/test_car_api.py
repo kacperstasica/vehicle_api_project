@@ -3,6 +3,7 @@ from unittest.mock import patch
 from rest_framework import status
 from rest_framework.test import APITestCase
 
+from ..exceptions import CarException
 from ..models import Car
 from .factories import CarFactory
 
@@ -40,6 +41,30 @@ class CarApiTestCase(APITestCase):
             Car.objects.filter(model='Bar', make='Foo').exists()
         )
         self.assertEqual(response.status_code, 201)
+
+    @patch('vehicles.services.car_existence_checker.CarExistenceChecker.get_vehicles_response')
+    def test_create_car_that_does_not_exist(self, mock_response):
+        mock_response.return_value = None
+        self.assertFalse(
+            Car.objects.filter(model='Foo', make='Bar').exists()
+        )
+        response = self.client.post(
+                path=self.cars_url,
+                data={
+                    'make': 'Foo',
+                    'model': 'Bar',
+                },
+                format='json',
+            )
+        self.assertEqual(
+            response.status_code,
+            status.HTTP_503_SERVICE_UNAVAILABLE
+        )
+
+        self.assertEqual(
+            response.json().get('detail'),
+            'Such car does not exist in our database, try again with another make or model.'
+        )
 
     @patch('vehicles.services.car_existence_checker.CarExistenceChecker.get_vehicles_response')
     def test_car_create_with_upper_model_name(self, mock_response):
@@ -99,4 +124,3 @@ class CarApiTestCase(APITestCase):
         self.assertFalse(
             Car.objects.filter(id=car.id).exists()
         )
-
