@@ -19,7 +19,7 @@
 
 2. Configure your local database by filling out `DJANGO_DATABASE_URL` setting in `.env` file. Make sure the username, password, and database name match the environment variables in docker-compose.yml
 
-3. After downloading the project and filling out the env file create and enter a Docker image
+3. After downloading the project and filling out the env file aggregate the container:
 
     ```
     docker-compose up
