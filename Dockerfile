@@ -11,4 +11,3 @@ RUN pip install pipenv --no-cache-dir && pipenv install --dev --system --deploy 
 
 COPY . /code/
 
-EXPOSE 8000
