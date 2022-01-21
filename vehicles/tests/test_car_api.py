@@ -1,6 +1,7 @@
 from unittest.mock import patch
 
 from rest_framework import status
+from rest_framework.exceptions import ValidationError
 from rest_framework.test import APITestCase
 
 from ..exceptions import CarException
@@ -123,4 +124,36 @@ class CarApiTestCase(APITestCase):
         )
         self.assertFalse(
             Car.objects.filter(id=car.id).exists()
+        )
+
+    @patch('vehicles.services.car_existence_checker.CarExistenceChecker.get_vehicles_response')
+    def test_create_car_that_already_exists_raises_validation_error(self, mock_response):
+        mock_response.return_value = [
+            {
+                'Make_ID': 482,
+                'Make_Name': 'Foo',
+                'Model_ID': 1951,
+                'Model_Name': 'Bar'
+            }
+        ]
+        car = CarFactory(model='Bar', make='Foo')
+        self.assertTrue(
+            Car.objects.filter(id=car.id).exists()
+        )
+        self.assertTrue(
+            Car.objects.filter(model__icontains='BAr').exists()
+        )
+
+        response = self.client.post(
+            path=self.cars_url,
+            data={
+                'make': 'FoO',
+                'model': 'BAr',
+            },
+            format='json',
+        )
+
+        self.assertEqual(
+            response.json().get('model')[0],
+            "We already have such model in our database."
         )

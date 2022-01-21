@@ -4,7 +4,7 @@ from django.db.models import Avg, Count
 
 class Car(models.Model):
     make = models.CharField(max_length=255)
-    model = models.CharField(max_length=255)
+    model = models.CharField(max_length=255, unique=True)
 
     class Meta:
         verbose_name = 'Samochód'

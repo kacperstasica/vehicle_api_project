@@ -28,6 +28,18 @@ class CarSerializer(serializers.ModelSerializer):
         else:
             raise CarException()
 
+    def validate(self, attrs):
+        model = attrs.get('model', None)
+        car = Car.objects.filter(model__icontains=model)
+
+        if car.exists():
+            raise serializers.ValidationError(
+                {
+                    'model': 'We already have such model in our database.'
+                }
+            )
+        return super().validate(attrs)
+
 
 class ReviewSerializer(serializers.ModelSerializer):
     car_id = serializers.IntegerField(source='car.id', required=True)
